@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>PersonalHub</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">P</span>
+        <span class="brand-name">PersonalHub</span>
+        <span class="brand-version" id="brand-version">v1.0.0</span>
+      </div>
+
+      <nav class="nav" id="nav">
+        <div class="nav-group">
+          <div class="nav-group-label">今天</div>
+          <button class="nav-item is-active" data-tab="home"><span class="nav-icon">◎</span>概览</button>
+          <button class="nav-item" data-tab="calendar"><span class="nav-icon">▦</span>日历</button>
+          <button class="nav-item" data-tab="market"><span class="nav-icon">📈</span>行情</button>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-label">记录</div>
+          <button class="nav-item" data-tab="tasks"><span class="nav-icon">✓</span>任务与习惯</button>
+          <button class="nav-item" data-tab="okr"><span class="nav-icon">◈</span>OKR</button>
+          <button class="nav-item" data-tab="ledger"><span class="nav-icon">¥</span>记账</button>
+          <button class="nav-item" data-tab="diet"><span class="nav-icon">☕</span>饮食</button>
+          <button class="nav-item" data-tab="body"><span class="nav-icon">⌁</span>身体</button>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-label">回顾</div>
+          <button class="nav-item" data-tab="year"><span class="nav-icon">▤</span>年度总览</button>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-label">系统</div>
+          <button class="nav-item" data-tab="settings"><span class="nav-icon">⚙</span>设置</button>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="data-line" id="sidebar-data">数据家加载中…</div>
+        <button class="link-button" id="open-data-home">打开数据家</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="nudges" id="nudges"></div>
+        <div class="topbar-right">
+          <button class="theme-toggle" id="theme-toggle" title="切换白天 / 黑夜模式" aria-label="切换白天 / 黑夜模式">🌙</button>
+          <span class="today-label" id="today-label"></span>
+        </div>
+      </header>
+      <section class="view" id="view">
+        <div class="card loading-card">
+          <span class="loading-spinner" aria-hidden="true"></span>
+          <span class="muted">正在启动 PersonalHub…</span>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modal-backdrop" hidden>
+    <div class="modal">
+      <div class="modal-head">
+        <h3 id="modal-title"></h3>
+        <button class="icon-button" id="modal-close">×</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="charts.js"></script>
+  <script src="views.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

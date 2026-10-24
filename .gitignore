@@ -1,0 +1,20 @@
+.venv/
+dist/
+build/
+*.spec
+__pycache__/
+*.pyc
+.pytest_cache/
+*.log
+.workbuddy/
+
+# 个人数据绝不入库：库文件、每日备份、导出、单实例锁
+*.db
+*.db-shm
+*.db-wal
+backups/
+exports/
+app.lock
+
+# 应用图标不纳入版本管理
+app-icon.ico

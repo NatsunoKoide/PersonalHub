@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>PersonalHub · 主题预览</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* 仅预览页用的外壳，和 app 无关 */
+    .preview-wrap { max-width: 920px; margin: 0 auto; padding: 24px; }
+    .preview-wrap .demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 760px){ .preview-wrap .demo-grid{ grid-template-columns:1fr; } }
+    .swatch-row { display:flex; gap:8px; flex-wrap:wrap; }
+    .swatch { width:46px; height:46px; border-radius:10px; border:1px solid var(--line-1); display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--ink-3); }
+    .seg { display:inline-flex; border:1px solid var(--line-1); border-radius:8px; overflow:hidden; }
+    .seg button { border:none; background:var(--panel); color:var(--ink-2); padding:6px 14px; font-size:13px; cursor:pointer; }
+    .seg button.is-on { background:var(--brand-soft); color:var(--brand); font-weight:600; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <main class="main">
+      <header class="topbar">
+        <div class="nudges">
+          <span class="nudge">今天 3 件事待办</span>
+        </div>
+        <div class="topbar-right">
+          <button class="theme-toggle" id="theme-toggle" title="切换白天 / 黑夜模式" aria-label="切换白天 / 黑夜模式">🌙</button>
+          <span class="today-label">2026-10-24</span>
+        </div>
+      </header>
+
+      <section class="view">
+        <div class="page-head">
+          <div><h1 class="page-title">主题预览</h1>
+            <div class="page-sub">点右上角 🌙/☀️ 一键切换白天 / 黑夜。选择会被记住，首次运行跟随系统。</div>
+          </div>
+        </div>
+
+        <div class="preview-wrap">
+          <div class="card">
+            <div class="card-head"><div class="card-title">表面与文字</div><div class="card-hint">--bg / --panel / --ink-1..4</div></div>
+            <p class="strong">主文字（ink-1）</p>
+            <p class="soft">次要文字（ink-2）</p>
+            <p class="muted">辅助 / 占位（ink-3 / ink-4）</p>
+            <div class="swatch-row">
+              <div class="swatch" style="background:var(--bg)">bg</div>
+              <div class="swatch" style="background:var(--panel)">panel</div>
+              <div class="swatch" style="background:var(--panel-sunk)">sunk</div>
+              <div class="swatch" style="background:var(--brand);color:#fff">brand</div>
+              <div class="swatch" style="background:var(--line-1)">line</div>
+            </div>
+          </div>
+
+          <div class="demo-grid">
+            <div class="card">
+              <div class="card-head"><div class="card-title">按钮</div></div>
+              <div class="row" style="gap:8px;flex-wrap:wrap">
+                <button class="button button-primary">主要</button>
+                <button class="button">普通</button>
+                <button class="button button-ghost">幽灵</button>
+                <button class="button button-danger">危险</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-head"><div class="card-title">语义色（钱的方向）</div></div>
+              <div class="row" style="gap:8px;flex-wrap:wrap">
+                <span class="chip chip-high">高</span>
+                <span class="chip chip-mid">中</span>
+                <span class="chip chip-low">低</span>
+                <span class="chip chip-ok">OK</span>
+                <span class="chip chip-warn">提醒</span>
+              </div>
+              <p class="money money-income" style="margin-top:10px">+1,280.00</p>
+              <p class="money money-expense">-326.50</p>
+            </div>
+
+            <div class="card">
+              <div class="card-head"><div class="card-title">表单控件</div></div>
+              <div class="field" style="margin-bottom:8px"><span class="field-label">文本框</span>
+                <input type="text" placeholder="试试聚焦（品牌光环）"></div>
+              <div class="field"><span class="field-label">下拉</span>
+                <select><option>选项一</option><option>选项二</option></select></div>
+            </div>
+
+            <div class="card">
+              <div class="card-head"><div class="card-title">日历繁忙度</div></div>
+              <div class="calendar-grid" style="grid-template-columns:repeat(4,1fr);gap:6px">
+                <div class="day-cell is-busy-1"><span class="day-number">21</span></div>
+                <div class="day-cell is-busy-2"><span class="day-number">22</span></div>
+                <div class="day-cell is-busy-3"><span class="day-number">23</span></div>
+                <div class="day-cell is-busy-4"><span class="day-number">24</span></div>
+                <div class="day-cell is-outside"><span class="day-number">25</span></div>
+                <div class="day-cell is-today"><span class="day-number">24</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // 与 app.js 中一致的轻量主题逻辑（预览页自带，不依赖 pywebview）
+    (function () {
+      function getStored() { try { return localStorage.getItem('ph-theme'); } catch (e) { return null; } }
+      function applyTheme(t) {
+        document.documentElement.setAttribute('data-theme', t);
+        var b = document.getElementById('theme-toggle');
+        if (b) b.textContent = t === 'dark' ? '☀️' : '🌙';
+      }
+      var theme = getStored();
+      if (!theme) theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+      applyTheme(theme);
+      document.getElementById('theme-toggle').addEventListener('click', function () {
+        var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        try { localStorage.setItem('ph-theme', next); } catch (e) {}
+      });
+    })();
+  </script>
+</body>
+</html>
